@@ -20,6 +20,17 @@ class BlocksGame
         void initWindow();
         void initVariables();
         void initBlocks();
+        void initHero();
+        void initFriends();
+        //game objects
+        sf::RectangleShape enemy;
+        std::vector<sf::RectangleShape> enemies;
+        sf::CircleShape _friend;
+        std::vector<sf::CircleShape> friends;
+        sf::CircleShape hero;
+        sf::Vector2f HeroPosition; 
+        
+
 
     public: 
     //Konstruktory i destruktory
@@ -32,6 +43,12 @@ class BlocksGame
         void updategame();
         void render();
         void updateEvents();
-        void updateHeroPosition();
+        void updateHeroPosition(int key);
+        void updateEnemies();
+        void renderEnemies();
+        void updateFriends();
+        void renderFriends();
+        void renderHero();
+    //void updateHero();
 
 };
