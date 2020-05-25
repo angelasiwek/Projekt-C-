@@ -7,6 +7,7 @@
 #include<iostream>
 #include<vector>
 #include<ctime>
+#include<iomanip>
 
 class BlocksGame
 {
@@ -22,6 +23,7 @@ class BlocksGame
         void initBlocks();
         void initHero();
         void initFriends();
+        void initLife();
         //game objects
         sf::RectangleShape enemy;
         std::vector<sf::RectangleShape> enemies;
@@ -29,6 +31,17 @@ class BlocksGame
         std::vector<sf::CircleShape> friends;
         sf::CircleShape hero;
         sf::Vector2f HeroPosition; 
+        std::vector<sf::CircleShape> hearts;
+
+        //game logic
+        float enemySpawnTime;
+        float enemySpawnTimeMAX;
+        float friendSpawnTime;
+        float friendSpawnTimeMAX;
+        int friendsMAX;
+        int enemiesMAX;
+        float points;
+        
         
 
 
@@ -43,12 +56,14 @@ class BlocksGame
         void updategame();
         void render();
         void updateEvents();
-        void updateHeroPosition(int key);
+        int updateHeroPosition(int key);
         void updateEnemies();
         void renderEnemies();
         void updateFriends();
         void renderFriends();
         void renderHero();
+        void spawnFriends();
+        void spawnEnemies();
     //void updateHero();
 
 };

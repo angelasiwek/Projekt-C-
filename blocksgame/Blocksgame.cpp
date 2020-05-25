@@ -14,6 +14,14 @@ void BlocksGame::initVariables()
 {
     this->window = nullptr;
 
+	this->points = 0;
+	this->enemySpawnTimeMAX = 400.f;
+	this->enemySpawnTime = this->enemySpawnTimeMAX;
+	this->friendSpawnTimeMAX = 200.f;
+	this->friendSpawnTime = this->friendSpawnTimeMAX;
+	this->enemiesMAX = 3;
+	this->friendsMAX = 5;
+	
 }
 
 void BlocksGame::initHero()
@@ -39,6 +47,8 @@ void BlocksGame::initBlocks()
 	this->enemy.setScale(sf::Vector2f(0.5f,0.5f));
 
 }
+
+
 
 void BlocksGame::initFriends()
 {
@@ -77,18 +87,22 @@ const bool BlocksGame::isrunning() const
 	return this->window->isOpen();
 }
 
-void BlocksGame::updateHeroPosition(int key)
+int BlocksGame::updateHeroPosition(int key)
 {
-	if(key == 1)
-	{	
-		
-			this->hero.move(8.f,0.f);
-	}
+	
 	if(key == 0)
 	{
-		
-		this->hero.setPosition(this->hero.getPosition() - sf::Vector2f(8.f,0.f));
+		if(this->hero.getPosition().x <= 0)
+			return 0;
 	}
+	if(key == 1)
+		{
+			if(this->hero.getPosition().x >= (this->window->getSize().x - this->hero.getRadius()) )
+			{
+				return 0;
+			}
+		}
+	return 1;
 }
 
 void BlocksGame::updateEvents()
@@ -106,10 +120,18 @@ void BlocksGame::updateEvents()
 					case sf::Keyboard::Escape:
 						this->window->close();
 					case sf::Keyboard::Left:
-						this->updateHeroPosition(0);
+						if(this->updateHeroPosition(0) == 1)
+							{
+								this->hero.setPosition(this->hero.getPosition() - sf::Vector2f(10.f,0.f));
+								this->HeroPosition = hero.getPosition();
+							}
 						break;
 					case sf::Keyboard::Right:
-						this->updateHeroPosition(1);
+						if(this->updateHeroPosition(1) == 1)
+						{
+							this->hero.move(10.f,0.f);
+							this->HeroPosition = hero.getPosition();
+						}
 						break;
 				}		
 		}
@@ -118,28 +140,114 @@ void BlocksGame::updateEvents()
 
 void BlocksGame::updateFriends()
 {
-	this->_friend.move(0.f,1.f);
+	if(this->friends.size() < this->friendsMAX)
+	{
+		if(this->friendSpawnTime >= this->friendSpawnTimeMAX)
+		{
+			this->spawnFriends();
+			this->friendSpawnTime = 0.f;
+		}
+		else
+		{
+			this->friendSpawnTime += 1.f;
+		}
+		
+	}
+
+	for(int i = 0; i < this->friends.size(); i++)
+	{
+		bool deleted = false;
+		this->friends[i].move(0.f,0.5f);
+		if(this->hero.getGlobalBounds().contains(this->friends[i].getPosition()))
+		{
+			deleted = true; 
+			this->points += 100.f;
+		}
+		if(this->friends[i].getPosition().y > this->window->getSize().y)
+		{
+			deleted = true;
+		}
+		if(deleted)
+		{
+			this->friends.erase(this->friends.begin() + i);
+		}
+	}
+
 }
 
 void BlocksGame::renderFriends()
 {
-	this->window->draw(this->_friend);
+	for( auto &f : this->friends )
+	{
+		this->window->draw(f);
+	}
+}
+
+void BlocksGame::spawnFriends()
+{
+	this->_friend.setPosition( static_cast<float>(rand() % static_cast<int>(this->window->getSize().x - this->_friend.getRadius())), 0.f);
+	this->_friend.setFillColor(sf::Color::Cyan);
+	this->friends.push_back(this->_friend);
 }
 
 void BlocksGame::updateEnemies()
 {
-	this->enemy.move(0.f,1.f);
+	if(this->enemies.size() < this->enemiesMAX)
+	{
+		if(this->enemySpawnTime >= this->enemySpawnTimeMAX)
+		{
+			this->spawnEnemies();
+			this->enemySpawnTime = 0.f;
+		}
+		else
+		{
+			this->enemySpawnTime += 1.f;
+		}
+		
+	}
+
+	for(int i = 0; i < this->enemies.size(); i++)
+	{
+		bool deleted = false;
+		this->enemies[i].move(0.f,0.5f);
+		if(this->hero.getGlobalBounds().contains(this->enemies[i].getPosition()))
+		{
+			deleted = true; 
+			this->points = this->points - 100; 
+		}
+		if(this->enemies[i].getPosition().y > this->window->getSize().y)
+		{
+			deleted = true;
+		}
+		if(deleted)
+		{
+			this->enemies.erase(this->enemies.begin() + i);
+		}
+	}
 }
 
 void BlocksGame::renderEnemies()
 {
-	this->window->draw(this->enemy);
+	for( auto &e : this->enemies )
+	{
+		this->window->draw(e);
+	}
+}
+
+void BlocksGame::spawnEnemies()
+{	
+	this->enemy.setPosition( static_cast<float>(rand() % static_cast<int>(this->window->getSize().x - this->enemy.getSize().x)), 0.f);
+	this->enemy.setFillColor(sf::Color::Cyan);
+	this->enemies.push_back(this->enemy);
+
 }
 
 void BlocksGame::renderHero()
 {
 	this->window->draw(this->hero);
 }
+
+
 
 void BlocksGame::render()
 {
@@ -148,7 +256,6 @@ void BlocksGame::render()
 	this->renderHero();
 	this->renderFriends();
 	this->renderEnemies();
-
 	this->window->display();
 
 }
