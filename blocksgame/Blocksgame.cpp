@@ -13,7 +13,7 @@ void BlocksGame::initWindow()
 void BlocksGame::initVariables()
 {
     this->window = nullptr;
-
+	this->health = 10;
 	this->points = 0;
 	this->enemySpawnTimeMAX = 400.f;
 	this->enemySpawnTime = this->enemySpawnTimeMAX;
@@ -21,7 +21,7 @@ void BlocksGame::initVariables()
 	this->friendSpawnTime = this->friendSpawnTimeMAX;
 	this->enemiesMAX = 3;
 	this->friendsMAX = 5;
-	
+	this->gameover = false;	
 }
 
 void BlocksGame::initHero()
@@ -66,6 +66,8 @@ BlocksGame::BlocksGame()
 	this->initVariables();
 	this->initWindow();
 	this->initBlocks();
+	this->initFont();
+	this->initText();
 	this->initFriends();
 	this->initHero();
 }
@@ -80,11 +82,25 @@ void BlocksGame::updategame()
 	this->updateEvents();
 	this->updateEnemies();
 	this->updateFriends();
+	this->updateText();
 }
 
 const bool BlocksGame::isrunning() const
 {
 	return this->window->isOpen();
+}
+
+int BlocksGame::isGameOver()
+{
+	if(this->gameover == true)
+		{
+			std::cout << "Game Over. Zakonczono gre z wynikiem: " << this->points << std::endl;
+			return 1;
+
+		}
+	else
+		return 0;
+	
 }
 
 int BlocksGame::updateHeroPosition(int key)
@@ -213,7 +229,8 @@ void BlocksGame::updateEnemies()
 		if(this->hero.getGlobalBounds().contains(this->enemies[i].getPosition()))
 		{
 			deleted = true; 
-			this->points = this->points - 100; 
+			this->health -= 1;
+			
 		}
 		if(this->enemies[i].getPosition().y > this->window->getSize().y)
 		{
@@ -223,6 +240,8 @@ void BlocksGame::updateEnemies()
 		{
 			this->enemies.erase(this->enemies.begin() + i);
 		}
+		if(this->health <= 0)
+			this->gameover = true;
 	}
 }
 
@@ -237,7 +256,7 @@ void BlocksGame::renderEnemies()
 void BlocksGame::spawnEnemies()
 {	
 	this->enemy.setPosition( static_cast<float>(rand() % static_cast<int>(this->window->getSize().x - this->enemy.getSize().x)), 0.f);
-	this->enemy.setFillColor(sf::Color::Cyan);
+	this->enemy.setFillColor(sf::Color::Black);
 	this->enemies.push_back(this->enemy);
 
 }
@@ -247,7 +266,24 @@ void BlocksGame::renderHero()
 	this->window->draw(this->hero);
 }
 
+void BlocksGame::initFont()
+{
+	
+	if(!this->font.loadFromFile("arial.ttf"));
+	{
+		std::cout << "ERROR: Can't load font. " << std::endl;
+	}
 
+}
+
+void BlocksGame::initText()
+{
+	this->text.setFont(this->font);
+	this->text.setFillColor(sf::Color::Black);
+	this->text.setString("nothing");
+	this->text.setCharacterSize(12);
+	this->text.setPosition(sf::Vector2f(3.f,10.f));
+}
 
 void BlocksGame::render()
 {
@@ -256,7 +292,19 @@ void BlocksGame::render()
 	this->renderHero();
 	this->renderFriends();
 	this->renderEnemies();
+	this->renderText();
 	this->window->display();
 
 }
 
+void BlocksGame::renderText()
+{
+	this->window->draw(this->text);
+}
+
+void BlocksGame::updateText()
+{
+	std::stringstream s;
+	s << "Points: " << this->points << " Health: " << this->health << "\n";
+	this->text.setString(s.str());
+}

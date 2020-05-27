@@ -8,6 +8,7 @@
 #include<vector>
 #include<ctime>
 #include<iomanip>
+#include<sstream>
 
 class BlocksGame
 {
@@ -23,7 +24,8 @@ class BlocksGame
         void initBlocks();
         void initHero();
         void initFriends();
-        void initLife();
+        void initFont();
+        void initText();
         //game objects
         sf::RectangleShape enemy;
         std::vector<sf::RectangleShape> enemies;
@@ -32,7 +34,8 @@ class BlocksGame
         sf::CircleShape hero;
         sf::Vector2f HeroPosition; 
         std::vector<sf::CircleShape> hearts;
-
+        sf::Font font;
+        sf::Text text;
         //game logic
         float enemySpawnTime;
         float enemySpawnTimeMAX;
@@ -41,7 +44,9 @@ class BlocksGame
         int friendsMAX;
         int enemiesMAX;
         float points;
-        
+        int health;
+        bool gameover;
+
         
 
 
@@ -64,6 +69,9 @@ class BlocksGame
         void renderHero();
         void spawnFriends();
         void spawnEnemies();
+        void renderText();
+        void updateText();
+        int isGameOver();
     //void updateHero();
 
 };

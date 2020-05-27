@@ -12,14 +12,15 @@ int main()
     
     
 
-    while(game.isrunning())
+    while(game.isrunning() && game.isGameOver() == 0)
     {
         game.updategame();
-
+        
         game.render();
+        
 
     }
-        
+    
     
     return 0;
 }
