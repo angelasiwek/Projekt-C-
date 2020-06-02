@@ -1,0 +1,9 @@
+README
+Angelika Siwek
+ Aby uruchomic gre, nalezy wpisac make lub make all, a nastepnie ./sfml-app.
+W grze znajduje sie postac, ktora nalezy poruszac w lewo lub w prawo za pomoca
+strzalek odpowiednio w lewo i w prawo. Nalezy zbierac spadajace jasne kolka, 
+unikac czarnych kwawdratow. 
+Gra konczy sie, gdy gracz straci wszystkie zycia.
+Aby wyjsc z gry nalezy nacisnac klawisz ESC lub kliknac myszką x.
+
