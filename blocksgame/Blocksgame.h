@@ -46,9 +46,7 @@ class BlocksGame
         float points;
         int health;
         bool gameover;
-
-        
-
+   
 
     public: 
     //Konstruktory i destruktory

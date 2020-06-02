@@ -13,7 +13,7 @@ void BlocksGame::initWindow()
 void BlocksGame::initVariables()
 {
     this->window = nullptr;
-	this->health = 10;
+	this->health = 5;
 	this->points = 0;
 	this->enemySpawnTimeMAX = 400.f;
 	this->enemySpawnTime = this->enemySpawnTimeMAX;
@@ -94,6 +94,7 @@ int BlocksGame::isGameOver()
 {
 	if(this->gameover == true)
 		{
+			
 			std::cout << "Game Over. Zakonczono gre z wynikiem: " << this->points << std::endl;
 			return 1;
 
@@ -138,14 +139,14 @@ void BlocksGame::updateEvents()
 					case sf::Keyboard::Left:
 						if(this->updateHeroPosition(0) == 1)
 							{
-								this->hero.setPosition(this->hero.getPosition() - sf::Vector2f(10.f,0.f));
+								this->hero.setPosition(this->hero.getPosition() - sf::Vector2f(20.f,0.f));
 								this->HeroPosition = hero.getPosition();
 							}
 						break;
 					case sf::Keyboard::Right:
 						if(this->updateHeroPosition(1) == 1)
 						{
-							this->hero.move(10.f,0.f);
+							this->hero.move(20.f,0.f);
 							this->HeroPosition = hero.getPosition();
 						}
 						break;
@@ -281,7 +282,7 @@ void BlocksGame::initText()
 	this->text.setFont(this->font);
 	this->text.setFillColor(sf::Color::Black);
 	this->text.setString("nothing");
-	this->text.setCharacterSize(12);
+	this->text.setCharacterSize(16);
 	this->text.setPosition(sf::Vector2f(3.f,10.f));
 }
 
