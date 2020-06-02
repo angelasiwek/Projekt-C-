@@ -1,0 +1,17 @@
+README
+Angelika Siwek
+
+Program skladajacy sie z pliku naglowkowego dod.h, pliku z definicja funkcji 
+dod.cpp oraz pliku z funkcja main : dodmain.cpp.
+
+Program jest dodatkiem do projektu, gdyz w projekcie nie udalo mi sie 
+zaimplemetnowac dziedziczenia oraz deklaracji przyjaciela klasy.
+
+Program nie zostal wyposazony w obsluge bledow. 
+
+Aby uruchomic nalezy wpisac make, a nastepnie ./program .
+
+Program sluzy do zapisywania studentow i ich ocen, wylicza ich srednie, 
+wylicza srednia wszystkich wpisanych studentow. 
+
+
