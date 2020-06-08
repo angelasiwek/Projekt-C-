@@ -1,0 +1,41 @@
+README
+PROJEKT C++ 
+ANGELIKA SIWEK
+
+Następujące zagadnienia zostały zaimplementowane w miejscach: 
+-klasy : Blocksgame.h, linijka 13
+	dod.h, linijka 5, linijka 15 oraz linijka 22.
+-konstruktory, destruktory : 
+	Blocksgame.h, linijka 53 oraz linijka 54.
+-konstruktor kopiujący : 
+	Blocksgame.cpp, linijka 64.
+-deklaracja przyjaciela :
+	dod.h, linijka 12.
+-dziedziczenie :
+	dod.h, linijka 22.
+-polimorfizm i metody wirtualne :
+	Blocksgame.h, linijka 54.
+-klasa abstrakcyjna : 
+	Blocksgame.h, linijka 13.
+-szablony :
+	Blocksgame.h, linijka 31, 33, 36. 
+	dod.h, linijka 10.
+-iteratory : 
+	m.in. Blocksgame.cpp, linijka 174, 226. 
+-algorytmy : 
+	m.in. Blocksgame.cpp, linijka 1588, 210. 
+-zakresowa pętla for : 
+	m.in. Blocksgame.cpp, linijka 174, 226. 
+-własny szablon klasy lub funkcji :
+	Blocksgame.h linijka 13 -> klasa
+	m.in. Blocksgame.h linijka 22-29, linijka 59-72 -> funkcje.
+-przeciążanie operatorów : 
+	m.in. Blocksgame.cpp linijka 169, 181.
+	blocksmain.cpp linijka 15.
+-wyjątki :
+	m.in. Blocksgame.cpp linijka 273 - 276. 
+-plik z deklaracją i plik z definicją metod : 
+	Blocksgame.h i Blocksgame.cpp.
+-linker : 
+	Blocksgame.cpp linijka 1, 
+	blocksmain.cpp linijka 1. 
