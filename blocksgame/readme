@@ -1,5 +1,6 @@
 README
 Angelika Siwek
+ Przed uruchomieniem nalezy zmienic w makefile ścieżkę do folderu z bibliotekami SFML.
  Aby uruchomic gre, nalezy wpisac make lub make all, a nastepnie ./sfml-app.
 W grze znajduje sie postac, ktora nalezy poruszac w lewo lub w prawo za pomoca
 strzalek odpowiednio w lewo i w prawo. Nalezy zbierac spadajace jasne kolka, 
